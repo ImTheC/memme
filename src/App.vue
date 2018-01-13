@@ -9,3 +9,9 @@ export default {
   name: 'app'
 }
 </script>
+
+<style>
+  body {
+    background: url("./assets/brick.png") repeat;
+  }
+</style>

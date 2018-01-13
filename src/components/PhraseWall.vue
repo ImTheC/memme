@@ -166,17 +166,16 @@
       wordsLength: function() {
         return this.words.length -1;
       }
+    },
+
+    mounted: function() {
+      this.phrase = localStorage.getItem('phrase');
+      this.parsePhrase();
     }
   }
 </script>
 
 <style>
-
-  body {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+41,000000+42,000000+42,ffffff+43&0.65+0,1+100 */
-    background: url("../assets/brick.png") repeat;
-  }
-
   .word-container {
     display: inline-block;
   }
