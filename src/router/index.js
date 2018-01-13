@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Menu from '@/components/Menu'
+import PhraseWall from '@/components/PhraseWall'
 
 Vue.use(Router);
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Menu',
+      component: Menu
+    },
+    {
+      path: '/phrase-wall',
+      name: 'PhraseWall',
+      component: PhraseWall
     }
   ],
   mode: 'history'

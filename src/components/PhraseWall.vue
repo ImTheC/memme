@@ -1,30 +1,21 @@
 <template>
-  <div class="hero is-fullheight">
-    <div class="hero-head">
-      <div class="container">
-        <div v-for="word in words" class="word-container">
-          <p class="title word-card init-transition">{{word}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="hero-foot">
-      <div v-if="wordsLength < 0" class="container">
-        <label class="label">Please enter a phrase:</label>
-        <div class="control">
-          <div class="field">
-            <textarea class="textarea is-primary" placeholder="Phrase..." v-model="phrase"></textarea>
-          </div>
-          <div class="field">
-            <a @click="parsePhrase" class="button is-large is-primary is-fullwidth">Let's Go!</a>
+  <div class="container">
+    <div class="hero is-fullheight">
+
+        <div class="hero-head">
+          <div class="section">
+            <div v-for="word in words" class="word-container">
+              <p class="title word-card init-transition">{{word}}</p>
+            </div>
           </div>
         </div>
-        <div class="control">
+        <div class="hero-foot">
+          <section @click="checkIt" class="section">
+            <a class="button is-large is-primary word-check is-fullwidth">Check Order</a>
+          </section>
         </div>
       </div>
-      <div v-if="wordsLength > 0" @click="checkIt" class="container">
-        <a class="button is-large is-primary is-rounded word-check is-fullwidth">Check Order</a>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -84,11 +75,11 @@
 
   export default {
 
-    name: 'HelloWorld',
+    name: 'PhraseWall',
 
     data () {
       return {
-        phrase: 'Frosted Waffle, please!',
+        phrase: '',
         success: false,
         words: [],
       }
@@ -108,8 +99,7 @@
             const cardBounds = card.getBoundingClientRect();
 
             const x = Math.floor(Math.random() * (bounds.width - cardBounds.width - cardBounds.x + 1));
-            let ranY = Math.floor(Math.random() * (bounds.height - cardBounds.height + 1));
-            const y = ranY - (ranY % cardBounds.height); // Round in order to stay in between row lines
+            const y = Math.floor(Math.random() * (bounds.height - 200 + 1));
 
             // translate the element
             card.style.webkitTransform =
@@ -154,6 +144,7 @@
 
         if (phraseCheck == this.phrase) {
           alert("YAY! You did it!");
+          this.$router.push('/');
           this.words = [];
         } else {
           alert("Try again!");
