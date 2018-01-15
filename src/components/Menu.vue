@@ -57,26 +57,6 @@
     };
 </script>
 
-<style scoped>
-  /*font-family: 'Finger Paint', cursive;*/
-  /*font-family: 'Share Tech Mono', monospace;*/
-
-  .menu-heading {
-    font-family: 'Finger Paint', cursive;
-    color: white;
-    font-size: 11vh;
-  }
-
-  .extra-margin {
-    margin-top: 35px;
-  }
-
-  .button {
-    height: 100px;
-  }
-
-  textarea {
-    resize: none;
-  }
+<style>
 
 </style>

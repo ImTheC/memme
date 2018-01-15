@@ -172,11 +172,17 @@
   }
 
   .word-card {
+    display: inline-block;
+    z-index: 10;
+
+    color: black;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+
     padding: 15px 25px;
     margin-right: 10px;
     border: 1px solid rgb(33, 33, 33);
-    display: inline-block;
-    z-index: 10;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2);
 
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
