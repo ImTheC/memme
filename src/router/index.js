@@ -5,6 +5,7 @@ import PhraseWall from '@/components/PhraseWall'
 
 Vue.use(Router);
 
+
 export default new Router({
   routes: [
     {

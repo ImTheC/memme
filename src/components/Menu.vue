@@ -1,59 +1,51 @@
 <template>
-  <section class="container">
-    <div class="hero is-fullheight">
-      <div class="hero-body">
-        <div class="section">
+  <div class="hero is-fullheight">
+    <div class="hero-body">
 
-          <p class="menu-heading">Please enter a phrase:</p>
+      <div v-if="option == 'menu'" class="container">
+        <p class="title">MENU:</p>
 
-          <div class="control extra-margin">
-            <div class="field">
-              <textarea class="textarea is-primary" rows="6" placeholder="Phrase..." v-model="phrase"></textarea>
-            </div>
-            <div class="field">
-              <a @click="goToPhraseWall" :disabled="!phraseLength" class="button is-large is-primary is-fullwidth">Let's Go!</a>
-            </div>
+        <div class="control extra-margin">
+          <div class="field">
+            <a @click="option = 'custom'" class="button is-large is-primary is-fullwidth">Custom Phrase</a>
           </div>
-
         </div>
+
       </div>
+
+      <enter-phrase v-if="option == 'custom'" :goBack="goBack"></enter-phrase>
+
+
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+
+    import EnterPhrase from './EnterPhrase.vue';
+
     export default {
+      components: {
+        'enter-phrase': EnterPhrase
+      },
+
       name: "Menu",
 
       data () {
         return {
-          phrase: ''
+          phrase: '',
+          option: 'menu'
         }
       },
 
       methods: {
 
-        goToPhraseWall: function() {
-
-          if (this.phrase.length) {
-            localStorage.setItem("phrase", this.phrase);
-            this.$router.push('/phrase-wall');
-          }
+        goBack: function () {
+          this.option = 'menu';
         }
 
-      },
-
-      computed: {
-
-        phraseLength: function() {
-          return this.phrase.length;
-        }
-
-      },
-
-      mounted: function() {
-        this.phrase = localStorage.getItem('phrase');
       }
+
     };
 </script>
 
