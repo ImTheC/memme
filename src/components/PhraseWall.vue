@@ -116,8 +116,7 @@
       checkIt: function() {
         const cards = document.querySelectorAll('.word-card');
         let cardOrder;
-        const cardsMax = cards.length-1;
-        let phraseCheck = '';
+        let phraseCorrect = true;
 
         cardOrder = Array.from(cards).sort(function (card1, card2) {
           const card1Pos = card1.getBoundingClientRect();
@@ -131,16 +130,17 @@
         });
 
         cardOrder.forEach((card, index) => {
-          if ( index == cardsMax ) {
-            phraseCheck += card.textContent;
+          if (this.words[index] === card.textContent) {
+            card.classList.add('correct');
           } else {
-            phraseCheck += card.textContent + ' ';
+            card.classList.remove('correct');
+            phraseCorrect = false;
           }
         });
 
-        if (phraseCheck == this.phrase) {
+        if (phraseCorrect) {
           alert("YAY! You did it!");
-          this.$router.push({ path: '/', query: { menu: 'custom' }});
+          this.$router.back();
         } else {
           alert("Try again!");
         }
@@ -223,5 +223,9 @@
     top: 10px;
     right: 15px;
     color: white;
+  }
+
+  .correct {
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(0,255,0,1) 100%);
   }
 </style>
