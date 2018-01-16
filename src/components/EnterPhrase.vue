@@ -40,7 +40,7 @@
 
       goToPhraseWall: function () {
         if (this.phrase.length) {
-          localStorage.setItem('phrase', this.phrase);
+          localStorage.setItem('phrase', this.phrase.trim());
           this.$router.push('/phrase-wall');
         }
       }

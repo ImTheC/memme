@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="hero is-fullheight">
-        <p class="copyright">Quote courtesy: {{copyright}}</p>
+        <p class="copyright">{{copyright}}</p>
         <div class="hero-head">
           <div class="section">
             <a @click="goBack" class="button is-info word-check"><< Go Back</a>
@@ -82,7 +82,7 @@
 
     methods: {
       goBack: function () {
-        this.$router.push({ path: '/'});
+        this.$router.back();
       },
 
       parsePhrase: function() {
@@ -151,14 +151,18 @@
     computed: {
       words: function() {
         const wordsArr = this.phrase.split(' ');
-        wordsArr.push("- " + localStorage.getItem('author'));
+        if (this.$router.currentRoute.query.qod === 'true') {
+          wordsArr.push("- " + localStorage.getItem('author'));
+        }
         return wordsArr;
       },
+
       phrase: function() {
-        return localStorage.getItem('phrase');
+        return this.$router.currentRoute.query.qod === 'true' ? localStorage.getItem('qod') : localStorage.getItem('phrase');
       },
+
       copyright: function() {
-        return localStorage.getItem('copyright');
+        return this.$router.currentRoute.query.qod === 'true' ? 'Quote courtesy: ' + localStorage.getItem('copyright') : '';
       }
     },
 

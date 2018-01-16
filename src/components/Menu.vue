@@ -7,10 +7,10 @@
 
         <div class="control extra-margin">
           <div class="field">
-            <a @click="option = 'custom'" class="button is-large is-primary is-fullwidth">Custom Phrase</a>
+            <a @click="goToCustom" class="button is-large is-primary is-fullwidth">Custom Phrase</a>
           </div>
           <div class="field">
-            <a @click="goToQod" class="button is-large is-primary is-fullwidth">Quote of the Day</a>
+            <a @click="goToQod" :class="{'is-loading': loading}" class="button is-large is-primary is-fullwidth">Quote of the Day</a>
           </div>
         </div>
 
@@ -36,7 +36,8 @@
       data () {
         return {
           phrase: '',
-          option: 'menu'
+          option: 'menu',
+          loading: false
         }
       },
 
@@ -48,17 +49,25 @@
         },
 
         goToQod: function() {
-          if (localStorage.getItem('day') != this.today && !localStorage.getItem('phrase')) {
+          this.loading = true;
+          if (localStorage.getItem('day') != this.today) {
             $.get("https://quotes.rest/qod", (res) => {
               localStorage.setItem('copyright', res.contents.copyright);
-              localStorage.setItem('phrase', res.contents.quotes[0].quote);
+              localStorage.setItem('qod', res.contents.quotes[0].quote);
               localStorage.setItem('author', res.contents.quotes[0].author);
               localStorage.setItem('day', new Date().getDay());
-              this.$router.push({path: '/phrase-wall', query: {copy: 'true'}});
+              // this.loading = false;
+              this.$router.push({path: '/phrase-wall', query: {qod: 'true'}});
             });
           } else {
-            this.$router.push({path: '/phrase-wall', query: {copy: 'true'}});
+            // this.loading = false;
+            this.$router.push({path: '/phrase-wall', query: {qod: 'true'}});
           }
+        },
+
+        goToCustom: function() {
+          this.option = 'custom';
+          this.$router.push({path: '/', query: {menu: 'custom'}});
         }
 
       },
