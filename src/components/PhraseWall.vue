@@ -1,18 +1,15 @@
 <template>
   <div class="container">
     <div class="hero is-fullheight">
-
+        <p class="copyright">Quote courtesy: {{copyright}}</p>
         <div class="hero-head">
           <div class="section">
+            <a @click="goBack" class="button is-info word-check"><< Go Back</a>
+            <a @click="checkIt" class="button is-medium is-primary word-check">Check Order</a>
             <div v-for="word in words" class="word-container">
               <p class="title word-card init-transition">{{word}}</p>
             </div>
           </div>
-        </div>
-        <div class="hero-foot">
-          <section @click="checkIt" class="section">
-            <a class="button is-large is-primary word-check is-fullwidth">Check Order</a>
-          </section>
         </div>
       </div>
 
@@ -79,17 +76,16 @@
 
     data () {
       return {
-        phrase: '',
-        success: false,
-        words: [],
+        success: false
       }
     },
 
     methods: {
+      goBack: function () {
+        this.$router.push({ path: '/'});
+      },
 
       parsePhrase: function() {
-        this.words = this.phrase.split(' ');
-
         this.$nextTick(function () {
 
           const cards = document.querySelectorAll('.word-card'),
@@ -99,7 +95,7 @@
             const cardBounds = card.getBoundingClientRect();
 
             const x = Math.floor(Math.random() * (bounds.width - cardBounds.width - cardBounds.x + 1));
-            const y = Math.floor(Math.random() * (bounds.height - 200 + 1));
+            const y = Math.floor(Math.random() * (bounds.height - cardBounds.width -  cardBounds.y + 1));
 
             // translate the element
             card.style.webkitTransform =
@@ -144,8 +140,7 @@
 
         if (phraseCheck == this.phrase) {
           alert("YAY! You did it!");
-          this.$router.push('/');
-          this.words = [];
+          this.$router.push({ path: '/', query: { menu: 'custom' }});
         } else {
           alert("Try again!");
         }
@@ -154,19 +149,26 @@
     },
 
     computed: {
-      wordsLength: function() {
-        return this.words.length -1;
+      words: function() {
+        const wordsArr = this.phrase.split(' ');
+        wordsArr.push("- " + localStorage.getItem('author'));
+        return wordsArr;
+      },
+      phrase: function() {
+        return localStorage.getItem('phrase');
+      },
+      copyright: function() {
+        return localStorage.getItem('copyright');
       }
     },
 
     mounted: function() {
-      this.phrase = localStorage.getItem('phrase');
       this.parsePhrase();
     }
   }
 </script>
 
-<style>
+<style scoped>
   .word-container {
     display: inline-block;
   }
@@ -210,5 +212,12 @@
 
   .hero-head {
     height: 75%;
+  }
+
+  .copyright {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    color: white;
   }
 </style>
